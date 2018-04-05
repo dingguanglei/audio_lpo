@@ -87,11 +87,30 @@ if __name__ == '__main__':
     print("audio_data", wav.waveData)
     print("time", wav.time)
 
-    nw = 512
+    fft_size = 512
     inc = 128
-    winfunc = signal.hamming(nw)
-    Frame = enframe(wav.waveData[0], nw,inc, winfunc )
-    plt.specgram(wav.waveData[0],2048,1024)
+    winfunc = signal.hamming(fft_size)
+    data = np.array(wav.waveData[0])
+
+    Frame = enframe(data, fft_size,inc, winfunc )
+    Frame_ft = np.fft.rfft(Frame) / fft_size
+
+    fig, (ax1, ax2) = plt.subplots(nrows=2)
+    data, freqs, bins, im = ax1.specgram(data,Fs=512)
+    ax1.axis('tight')
+
+    # We need to explictly set the linear threshold in this case...
+    # Ideally you should calculate this from your bin size...
+    ax2.set_yscale('symlog', linthreshy=0.01)
+
+    ax2.pcolormesh(bins, freqs, 100* np.log10(data))
+    ax2.axis('tight')
+
+    plt.show()
+    exit(1)
+    plt.plot(Frame_ft)
+    plt.show()
+    plt.specgram(data,2048,1024)
     plt.show()
     plt.plot(wav.waveData[0])
     plt.show()
