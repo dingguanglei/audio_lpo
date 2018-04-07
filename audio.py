@@ -94,10 +94,21 @@ if __name__ == '__main__':
 
     Frame = enframe(data, fft_size,inc, winfunc )
     Frame_ft = np.fft.rfft(Frame) / fft_size
-
+    # fft_size = 512
+    # t = np.arange(0, 1.0, 1.0 / 8000)
+    # x = 50 *np.sin(2 * np.pi * 512 * t) +  np.sin(2 * np.pi * 1024 * t)
+    # data = x[:fft_size]
+    # plt.plot(data)
+    # plt.show()
     fig, (ax1, ax2) = plt.subplots(nrows=2)
     data, freqs, bins, im = ax1.specgram(data,Fs=512)
 
+
+    mesh = plt.imshow(data, origin='lower', aspect='auto',
+                     cmap='gist_earth')
+    plt.axis('tight')
+    fig.colorbar(mesh)
+    plt.show()
     #  Returns
     #     -------
     #     spectrum : 2-D array
