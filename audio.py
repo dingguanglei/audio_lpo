@@ -80,7 +80,7 @@ def enframe(signal, length_perframe, gap_between_frame, winfunc):
 
 
 if __name__ == '__main__':
-    wav = WAVE("audio.wav")
+    wav = WAVE("audio_8k.wav")
     print("采样率",wav.framerate)
     print("nframes",wav.nframes)
     print("nchannels",wav.nchannels)
@@ -97,13 +97,27 @@ if __name__ == '__main__':
 
     fig, (ax1, ax2) = plt.subplots(nrows=2)
     data, freqs, bins, im = ax1.specgram(data,Fs=512)
-    ax1.axis('tight')
 
+    #  Returns
+    #     -------
+    #     spectrum : 2-D array
+    #         Columns are the periodograms of successive segments.
+    #
+    #     freqs : 1-D array
+    #         The frequencies corresponding to the rows in *spectrum*.
+    #
+    #     t : 1-D array
+    #         The times corresponding to midpoints of segments (i.e., the columns
+    #         in *spectrum*).
+    #
+    #     im : instance of class :class:`~matplotlib.image.AxesImage`
+    #         The image created by imshow containing the spectrogram
     # We need to explictly set the linear threshold in this case...
     # Ideally you should calculate this from your bin size...
-    ax2.set_yscale('symlog', linthreshy=0.01)
+    # ax2.set_yscale('symlog')
 
     ax2.pcolormesh(bins, freqs, 100* np.log10(data))
+    print(max(freqs))
     ax2.axis('tight')
 
     plt.show()
