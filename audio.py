@@ -104,6 +104,7 @@ def MatrixToImage(data):
 
 if __name__ == '__main__':
     path = "audio"
+
     fileNames = readFile(path)
     for file in fileNames:
         wav = WAVE(path + "/" + file, True)
