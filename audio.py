@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.mlab import specgram
 import matplotlib
 import math
 from PIL import Image
@@ -8,6 +9,7 @@ import random
 import wave
 import os
 from scipy import signal
+
 import imageio
 import scipy
 from skimage.exposure import exposure, equalize_hist
@@ -108,9 +110,14 @@ if __name__ == '__main__':
     fileNames = readFile(path)
     for file in fileNames:
         wav = WAVE(path + "/" + file, True)
-        plt.plot(wav.time, wav.waveData)
-        plt.show()
-        sp_data, freqs, bins, im = plt.specgram(wav.waveData, Fs=512)
+        # plt.plot(wav.time, wav.waveData)
+        # plt.show()
+
+        # freqs = (n-1)/N *Fs
+        # tbins = fs/256    k = fix((Nx-noverlap)/(length(window)-noverlap))
+        #len(freqs)=NFFT/2 = 257 , len(t) =166
+        sp_data, freqs, bins, im = plt.specgram(wav.waveData,NFFT=512,Fs=wav.framerate,cmap="gray",noverlap=128)
+        # spec, freqs, t = specgram(wav.waveData,NFFT=512,Fs=wav.framerate)
         sp_img = MatrixToImage(sp_data)
         sp_data = equalize_hist(sp_data)
         plt.subplots_adjust(top=1, bottom=0, left=0, right=1, hspace=0, wspace=0)

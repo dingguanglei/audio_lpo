@@ -2,6 +2,7 @@
 import numpy as np
 import pylab as pl
 import cv2
+
 sampling_rate = 8000
 # N点FFT能精确计算的频率
 # 假设取样频率为fs, 取波形中的N个数据进行FFT变换。
