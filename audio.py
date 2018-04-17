@@ -122,7 +122,14 @@ if __name__ == '__main__':
         sp_data = equalize_hist(sp_data)
         plt.subplots_adjust(top=1, bottom=0, left=0, right=1, hspace=0, wspace=0)
         plt.tight_layout()
-        plt.savefig("img")
+
+        plt.gca().xaxis.set_major_locator(plt.NullLocator())
+        plt.gca().yaxis.set_major_locator(plt.NullLocator())
+        plt.subplots_adjust(top=1, bottom=0, right=1, left=0, hspace=0, wspace=0)
+        plt.margins(0, 0)
+        plt.savefig("img", format='png', transparent=True, dpi=300, pad_inches=0)
+
+        # plt.savefig("img",bbox_inches = 'tight')
         plt.axis("off")
         plt.show()
     exit(1)
